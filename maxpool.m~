@@ -1,8 +1,0 @@
-% Step 3 
-% takes an input image (3d array) and reduce the s
-% we choose to do 2 x 2 maxpooling here
-function out = maxpool(in)
-    a = max(in(1:2:end, 1:2:end, :), in(2:2:end, 1:2:end, :));
-    b = max(in(1:2:end, 2:2:end, :), in(2:2:end, 2:2:end, :));
-    out = max(a,b);
-end
