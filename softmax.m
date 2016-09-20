@@ -1,4 +1,5 @@
 % Step 6
+% Takes in a 1D vector and converts it to a set of prob that sum up to 1
 
 function out = softmax(in)
     a = 0;
