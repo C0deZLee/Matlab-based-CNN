@@ -10,10 +10,10 @@ for classindex = 1:10
     %get indices of all images of that class
     inds = find(trueclass==classindex);
     %take first one
-    imrgb = imageset(:,:,:,inds(1));
+    imrgb = imageset(:,:,:,inds(3));
     %display it along with ground truth text label
-    subplot(2,5,classindex); imagesc(imrgb); 
-    %truesize(gcf,[64 64]); <-- commented out, messes with subplots
+    subplot(2,5,classindex); 
+    imagesc(imrgb); 
     title(sprintf('%s',classlabels{classindex}));
 end
 
@@ -35,15 +35,20 @@ end
 %loading this file defines imrgb and layerResults
 load('debuggingTest.mat');
 %sample code to show image and access expected results
-figure; imagesc(imrgb); truesize(gcf,[64 64]);
-for d = 1:length(layerResults)
-    result = layerResults{d};
+figure; 
+% change this line to take different imges
+imrgb = imageset(:,:,:,3);
+imagesc(imrgb); 
+truesize(gcf,[64 64]);
+layerOutput = CNNDriver(imrgb);
+for d = 1:length(layerOutput)
+    result = layerOutput{d};
     fprintf('layer %d output is size %d x %d x %d\n',...
         d,size(result,1),size(result,2), size(result,3));
 end
 
 %find most probable class
-classprobvec = squeeze(layerResults{end});
+classprobvec = squeeze(layerOutput{end});
 [maxprob,maxclass] = max(classprobvec);
 %note, classlabels is defined in 'cifar10testdata.mat'
 fprintf('estimated class is %s with probability %.4f\n',...
